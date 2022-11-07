@@ -3,13 +3,7 @@ let cors = require("cors");
 const app = express();
 
 app.use(express.json())
-app.use((req,res,next)=>{
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,authorization");
-    app.use(cors);
-    next();
-})
+app.use(cors())
 
 let users = [];
 let tweets = [];
@@ -51,8 +45,12 @@ app.post("/tweets",(req,res)=>{
 app.get("/tweets",(req,res)=>{
     let lastTen = [];
     if(tweets.length < 10){
+        let i;
+        for(i=tweets.length-1;i>=0;i--){
+            lastTen.push(tweets[i]);
+        }
         res.status(200);
-        res.send(tweets);
+        res.send(lastTen);
     }
     else{
         let i;
