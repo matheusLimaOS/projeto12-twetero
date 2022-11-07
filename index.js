@@ -28,6 +28,23 @@ app.post("/tweets",(req,res)=>{
     res.send('OK');
 })
 
+app.get("/tweets",(req,res)=>{
+    let lastTen = [];
+    if(tweets.length < 10){
+        res.status(200);
+        res.send(tweets);
+    }
+    else{
+        let i;
+        for(i=1;i<=10;i++){
+            lastTen.push(tweets[tweets.length-i]);
+        }
+
+        res.status(200);
+        res.send(lastTen);
+    }
+})
+
 
 function getAvatar(username){
     let avatar;
