@@ -5,7 +5,6 @@ app.use(express.json())
 
 let users = [];
 let tweets = [];
-let tweetsCompose = [];
 
 app.post("/sign-up",(req,res)=>{
     let user = {
@@ -18,14 +17,27 @@ app.post("/sign-up",(req,res)=>{
 })
 
 app.post("/tweets",(req,res)=>{
-    let tweet = {
-        : ,
-        : 
+    let avate = getAvatar(req.body.username);
+    let tweetCompose = {
+        username: req.body.username,
+        tweet: req.body.tweet,
+        avatar: avate
     }
-    users.push(user);
+    tweets.push(tweetCompose);
     res.status(201);
     res.send('OK');
 })
 
+
+function getAvatar(username){
+    let avatar;
+    users.forEach((user)=>{
+        if(user.username === username){
+            avatar = user.avatar;
+        }
+    })
+
+    return avatar;
+}
 
 app.listen(5000);
